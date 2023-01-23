@@ -32,11 +32,12 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(methodOverride('_method'))
   
   app.get('/', checkAuthenticated, (req, res) => {
-	res.render('index.ejs', { name: req.user.name })
+	res.render('pages/index.ejs', { name: req.user.name })
   })
   
   app.get('/login', checkNotAuthenticated, (req, res) => {
-	res.render('login.ejs')
+	res.render('pages/login.ejs')
+  // let $navbar = $('')
   })
   
   app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
@@ -46,7 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
   }))
   
   app.get('/register', checkNotAuthenticated, (req, res) => {
-	res.render('register.ejs')
+	res.render('pages/register.ejs')
   })
   
   app.post('/register', checkNotAuthenticated, async (req, res) => {
@@ -63,9 +64,19 @@ if (process.env.NODE_ENV !== 'production') {
 	  res.redirect('/register')
 	}
   })
+
+  app.get('/characters', checkAuthenticated, async (req, res) => {
+    res.render('pages/characters.ejs')
+  })
+
+  app.get('/rooms', checkAuthenticated, async (rec, res) => {
+    res.render('pages/rooms.ejs')
+  })
   
   app.delete('/logout', (req, res) => {
-	req.logOut()
+	req.logOut((err) => {
+    if (err) { return next(err) }
+  })
 	res.redirect('/login')
   })
   

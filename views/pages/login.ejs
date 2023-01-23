@@ -1,6 +1,8 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
 <h1>Login</h1>
-<% if (messages.error) { %>
-    <%= message.error %>
+<% if (messages) { %>
+    <%= messages.error %>
 <% } %>
 <form action="/login" method="POST">
     <div>
